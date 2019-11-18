@@ -1,0 +1,50 @@
+version: "3"
+services:
+    nginx:
+        image: "my:nginx_1.17.5"
+        ports:
+            - "80:80"
+            - "443:443"
+        networks:
+            - edu
+        container_name: nginx
+        volumes:
+              - "${NGINX_CONF_DIR}:${NGINX_CONF_WORKING_DIR}"
+              - "${NGINX_VHOST_CONF_DIR}:${NGINX_VHOST_WORKING_DIR}"
+              - "${NGINX_LOG_DIR}:${NGINX_LOG_WORKING_DIR}"
+              - "${NGINX_SSL_DIR}:${NGINX_SSL_WORKING_DIR}"
+        #command: tail -f /dev/null      
+    web:
+        image: "my:php_fpm_7.0.22"
+        ports:
+            - "9000:9000"
+        volumes:
+              - "${WEB_CODE_DIR}:${WEB_WORKING_DIR}"
+              - "${PHP_LOG_DIR}:${PHP_LOG_WORKING_DIR}"
+              - "${PHP_INI_DIR}:${PHP_INI_WORKING_DIR}"
+              - "${PHP_FPM_DIR}:${PHP_FPM_WORKING_DIR}"
+              - "${PHP_FPM_D_DIR}:${PHP_FPM_D_WORKING_DIR}"
+        working_dir: "${WEB_WORKING_DIR}"
+        networks:
+            - edu
+        container_name: php70_fpm
+        #command: tail -f /dev/null
+    redis:
+        image: "my:redis"
+        ports:
+            - "6379:6379"
+        networks:
+            - edu
+        container_name: redis
+    db:
+        image: "my:mysql_5.6"
+        ports:
+            - "3306:3306"
+        networks:
+            - edu
+        container_name: db
+networks:
+    edu:
+        driver: bridge
+#        external:
+#            name: host
