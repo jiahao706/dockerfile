@@ -1,0 +1,6 @@
+#!/bin/bash
+host="localhost"
+port=6379
+password="admin"
+database=1
+docker exec -it redis redis-cli -h ${host} -p ${port} -a ${password} -n ${database}
