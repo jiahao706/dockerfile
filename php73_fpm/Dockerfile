@@ -92,7 +92,7 @@ RUN echo "" \
     && ./configure --with-openssl=/usr/local/src/openssl-1.1.0l && make && make install \
     && cd /usr/local/bin \
     && curl -sS https://getcomposer.org/installer | php \
-    && mv /usr/local/bin/composer.phar /usr/local/bin/composerl \
+    && mv /usr/local/bin/composer.phar /usr/local/bin/composer \
     && cd /usr/local/src \
     && git clone https://github.com/swoole/swoole-src.git \
     && cd swoole-src \
